@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VaccineRegister extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $fillable = [
         'vaccine_id',
