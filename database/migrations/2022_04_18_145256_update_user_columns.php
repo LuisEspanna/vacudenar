@@ -30,6 +30,9 @@ class UpdateUserColumns extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['gender_id']);
+            $table->dropForeign(['role_id']);
+        });
     }
 }

@@ -26,6 +26,6 @@ class Genders extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('genders');
     }
 }
