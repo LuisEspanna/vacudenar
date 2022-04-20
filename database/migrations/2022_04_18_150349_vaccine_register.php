@@ -28,6 +28,9 @@ class VaccineRegister extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('vaccine_register', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+        Schema::dropIfExists('vaccine_register');
     }
 }
