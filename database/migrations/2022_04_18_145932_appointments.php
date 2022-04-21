@@ -16,8 +16,8 @@ class Appointments extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('user_id')->constrained();
-            $table->dateTime('date');
-            $table->foreignId('status_id')->constrained('status');
+            $table->dateTime('date')->unique();
+            $table->foreignId('status_id')->constrained('statuses');
         });
     }
 

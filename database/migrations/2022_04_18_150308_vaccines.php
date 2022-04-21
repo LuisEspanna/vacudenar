@@ -15,7 +15,7 @@ class Vaccines extends Migration
     {
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id('id');
-            $table->string('name', 45);
+            $table->string('name', 45)->unique();
         });
     }
 

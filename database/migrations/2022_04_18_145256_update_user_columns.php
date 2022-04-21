@@ -14,7 +14,7 @@ class UpdateUserColumns extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('identification');
+            $table->integer('identification')->unique();
             $table->foreignId('gender_id')->constrained();
             $table->string('address');
             $table->string('phone');
