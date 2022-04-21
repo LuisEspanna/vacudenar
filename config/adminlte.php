@@ -264,6 +264,21 @@ return [
             'url'  => '/',
             'icon' => 'fas fa-fw fa-home',
         ],
+        [
+            'text' => 'Vacunas',
+            'url'  => '/vacunas',
+            'icon' => 'fas fa-solid fa-syringe',
+        ],
+        /*[
+            'text' => 'Usuario',
+            'url'  => '/usuario',
+            'icon' => 'fas fa-solid fa-user',
+        ],*/
+        [
+            'text' => 'Citas',
+            'url'  => '/citas',
+            'icon' => 'fas fa-solid fa-calendar-check',
+        ]
         
         /*
         [

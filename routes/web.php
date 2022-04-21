@@ -23,10 +23,16 @@ Route::get('/', function () {
 
 //---------------------------------------------------- TOKEN
 Route::get('api/token', function () {
-    return csrf_token(); 
+    return csrf_token();
 });
 
 
 Auth::routes();
+
+Route::get('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunas'])->name('vacunas');
+
+Route::get('/citas', [App\Http\Controllers\HomeController::class, 'citas'])->name('citas');
+
+#Route::get('/usuario', [App\Http\Controllers\HomeController::class, 'usuario'])->name('usuario');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -26,4 +26,19 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function vacunas()
+    {
+        return view('vacunas');
+    }
+
+    public function citas()
+    {
+        return view('citas');
+    }
+
+    public function usuario()
+    {
+        return view('usuario');
+    }
 }
