@@ -13,7 +13,7 @@ class VaccineRegister extends Migration
      */
     public function up()
     {
-        Schema::create('vaccine_register', function (Blueprint $table) {
+        Schema::create('vaccine_registers', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('vaccine_id');
             $table->date('date');

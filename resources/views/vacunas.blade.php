@@ -1,65 +1,64 @@
 @extends('master')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <br>
-            <h3>Seleccione su vacuna</h3>
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <label class="col-form-label">Ingrese número de dosis</label><br>
-                  </div>
-            <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-                  Dosis
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button class="dropdown-item" type="button">1</button>
-                  <button class="dropdown-item" type="button">2</button>
-                  <button class="dropdown-item" type="button">3</button>
-                  <button class="dropdown-item" type="button">4</button>
-                </div>
-              </div>
-            </div>
-            <br>
-              <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                  <label class="col-form-label">Ingrese la farmacéutica de la vacuna</label><br>
-                </div>
-                <br>
-                <div class="dropdown">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-                      Famacéutica
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                      <button class="dropdown-item" type="button">Aztrazeneca</button>
-                      <button class="dropdown-item" type="button">Moderna</button>
-                      <button class="dropdown-item" type="button">Pfizer</button>
-                      <button class="dropdown-item" type="button">Jansen</button>
-                      <button class="dropdown-item" type="button">Sinovac</button>
+
+<div class="col-md-12">
+
+    <div class="card card-primary mt-4">
+        <div class="card-header">
+            <h3 class="card-title">REGISTRAR UNA DÓSIS</h3>
+        </div>
+        
+        <form method="post">
+            {{ csrf_field() }}
+
+            <div class="card-body">
+                @if ($role == 2)
+                  <!-- si es estudiante-->
+                  <input type="hidden" value="{{$user_id}}" name="user_id">
+                @else
+                <!-- si es pro-->
+                    <div class="form-group">
+                        <label for="user_id" class="form-label">Seleccione el estudiante</label>
+                        <select class="custom-select form-control-border border-width-2" name="user_id" required>
+                            @foreach( $users as $key => $user )
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                  </div>
-              </div>
+                @endif
 
-              <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                  <label class="col-form-label">Fecha vacuna</label><br>
+                <div class="form-group">
+                    <label for="cod_grupo" class="form-label">Ingrese número de dosis</label>
+                    <select class="custom-select form-control-border border-width-2" name="number" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                 </div>
-                <br>
-                <input class="" type="date">
-              </div>
-              <br>
-              <div>
-                <button type="button" class="btn btn-success">Guardar</button>
-              </div>
-              
-        </div>
-         
-               
 
-              
-        </div>
+                <div class="form-group">
+                    <label for="vaccine_id" class="form-label">Ingrese la farmacéutica de la vacuna</label>
+                    <select class="custom-select form-control-border border-width-2" name="vaccine_id" required>
+                        @foreach( $vaccines as $key => $vaccine )
+                        <option value="{{ $vaccine->id }}">{{ $vaccine->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio_venta" class="form-label">Fecha vacuna</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
     </div>
 </div>
+
 @endsection

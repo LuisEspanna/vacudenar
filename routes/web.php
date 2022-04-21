@@ -29,9 +29,10 @@ Route::get('api/token', function () {
 
 Auth::routes();
 
-Route::get('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunas'])->name('vacunas');
+Route::get('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunasIndex'])->name('vacunas');
+Route::post('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunasCreate'])->name('vacunas');
 
-Route::get('/citas', [App\Http\Controllers\HomeController::class, 'citas'])->name('citas');
+Route::get('/citas', [App\Http\Controllers\HomeController::class, 'citasIndex'])->name('citas');
 
 #Route::get('/usuario', [App\Http\Controllers\HomeController::class, 'usuario'])->name('usuario');
 
