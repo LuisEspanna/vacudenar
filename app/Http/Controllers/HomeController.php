@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user_id = Auth::user()->id;
+        $user = User::findOrFail($user_id);
+        $usuarios = count(User::all());
+
+
+        return view('home', [
+            'role' => $user->role_id,
+            'usuarios' => $usuarios,
+            'estudiantes' => 0,
+            'trabajadores' => 0,
+            'salud' => 0
+        ]);
     }
 
     public function vacunas()
