@@ -7,6 +7,7 @@ use App\Models\Vaccine;
 use App\Models\VaccineRegister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mckenziearts\Notify\LaravelNotify;
 
 class HomeController extends Controller
 {
@@ -30,14 +31,17 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         $usuarios = count(User::all());
-
+        $dosis = count(VaccineRegister::all());
 
         return view('home', [
             'role' => $user->role_id,
             'usuarios' => $usuarios,
             'estudiantes' => 0,
             'trabajadores' => 0,
-            'salud' => 0
+            'salud' => 0,
+            'citas_pendientes'=> 0,
+            'citas_atendidas'=> 0,
+            'dosis'=> $dosis
         ]);
     }
 
@@ -60,16 +64,29 @@ class HomeController extends Controller
     {
         $p = new VaccineRegister();
         $p->vaccine_id = $request->input('vaccine_id');
-        $p->date = $request->input('date') ;
+        $p->date = $request->input('date');
         $p->user_id = $request->input('user_id') ;
         $p->save();
 
-        return redirect('/');
+        notify()->success('Dósis registrada con éxito');
+        return redirect('/home' );
     }
 
-    public function citasIndex()
-    {
-        return view('citas');
+    public function citasIndex(){
+        $user_id = Auth::user()->id;
+        $user = User::findOrFail($user_id);
+        $users = User::all();
+        $vaccines = Vaccine::all();
+
+        // Admin y salud
+        if($user->role_id <= 2 ){
+            return view('citas', ['vaccines' => $vaccines, 'users' => $users, 'role' => $user->role_id]);
+        } else {
+            return view('citas', ['vaccines' => $vaccines, 'user_id' => $user_id, 'role' => $user->role_id]);
+        }
+    }
+
+    public function citasCreate(){
     }
 
     public function usuarioIndex()

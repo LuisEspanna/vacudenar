@@ -84,18 +84,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Role::create([
+            'name' => 'Salud',
+            'description' => 'Acceso para generar reportes',
+        ]);
+
+        Role::create([
             'name' => 'Estudiante',
             'description' => 'Acceso personal',
         ]);
 
         Role::create([
             'name' => 'Empleado',
-            'description' => 'Acceso personal',
+            'description' => 'Acceso personal empleado',
         ]);
 
         Role::create([
-            'name' => 'Salud',
-            'description' => 'Acceso para generar reportes',
+            'name' => 'Profesor',
+            'description' => 'Acceso personal profesor',
         ]);
             
         return;

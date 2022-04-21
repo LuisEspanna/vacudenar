@@ -13,11 +13,8 @@
             {{ csrf_field() }}
 
             <div class="card-body">
-                @if ($role == 2)
-                  <!-- si es estudiante-->
-                  <input type="hidden" value="{{$user_id}}" name="user_id">
-                @else
-                <!-- si es pro-->
+                @if ($role == 1 || $role == 2)
+                    <!-- si es admin o salud-->
                     <div class="form-group">
                         <label for="user_id" class="form-label">Seleccione el estudiante</label>
                         <select class="custom-select form-control-border border-width-2" name="user_id" required>
@@ -26,6 +23,9 @@
                             @endforeach
                         </select>
                     </div>
+                @else
+                    <!-- si es estudiante, profesor o empleado -->
+                    <input type="hidden" value="{{$user_id}}" name="user_id">
                 @endif
 
                 <div class="form-group">

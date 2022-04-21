@@ -8,7 +8,7 @@
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 windows.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-windows.charts = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
+windows.Chart = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 
 /***/ }),
 
