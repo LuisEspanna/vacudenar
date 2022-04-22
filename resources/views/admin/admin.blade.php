@@ -22,7 +22,7 @@
 
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{ $estudiantes }}<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{ $estudiantes }}</h3>
                         <p>Estudiantes</p>
                     </div>
                     <div class="icon">
@@ -98,7 +98,7 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('/vacunas/reporte' ) }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 

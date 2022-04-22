@@ -34,6 +34,8 @@ Route::post('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunasCre
 
 Route::get('/citas', [App\Http\Controllers\HomeController::class, 'citasIndex'])->name('citas');
 
-#Route::get('/usuario', [App\Http\Controllers\HomeController::class, 'usuario'])->name('usuario');
+Route::get('/vacunas/reporte', [App\Http\Controllers\HomeController::class, 'allVacunas']);
+Route::get('/vacunas/reporte/{id}', [App\Http\Controllers\HomeController::class, 'reporteVacunas'])->where('id','[0-9]+');;
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

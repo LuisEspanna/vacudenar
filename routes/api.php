@@ -20,3 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('v1/genders',            [APIController::class, 'getGender']);
+
+Route::get('v1/vaccines',            [APIController::class, 'getReportVaccines']);
+
+Route::get('v1/users',            [APIController::class, 'getUsers']);

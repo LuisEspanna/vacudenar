@@ -35,8 +35,6 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         
-        
-
         if($user->role_id <= 2){
             $usuarios = count(User::all());
             $dosis = count(VaccineRegister::all());
@@ -48,7 +46,7 @@ class HomeController extends Controller
             $citas_atendidas = DB::table('appointments')->where('status_id', '=', 2)->get()->count();
 
             $results = DB::select('select v.name, count(month(vc.date)) total, month(vc.date) as mes
-            from vacunas.vaccine_registers vc join vacunas.vaccines v 
+            from vaccine_registers vc join vaccines v 
             on vc.vaccine_id = v.id
             where year(vc.date) >= year(curdate())
             group by v.name, vc.date');
@@ -68,17 +66,18 @@ class HomeController extends Controller
         } else {
             $dosis = DB::table('vaccine_registers')->where('user_id', '=', $user_id)->get()->count();
             
-            $citas_pendientes = DB::select('select count(*) as total from vacunas.appointments
+            $citas_pendientes = DB::select('select count(*) as total from appointments
             where user_id = ? and status_id = 1', [$user_id]);
 
-            $citas_atendidas = DB::select('select count(*) as total from vacunas.appointments
+            $citas_atendidas = DB::select('select count(*) as total from appointments
             where user_id = ? and status_id = 2', [$user_id]);
 
             return view('others.others', [
                 'role' => $user->role_id,
                 'citas_pendientes'=> $citas_pendientes[0],
                 'citas_atendidas'=> $citas_pendientes[0],
-                'dosis'=> $dosis
+                'dosis'=> $dosis,
+                'id'=> $user_id
             ]);
         }
     }
@@ -128,8 +127,20 @@ class HomeController extends Controller
     public function citasCreate(){
     }
 
-    public function usuarioIndex()
-    {
-        return view('usuario');
+    public function reporteVacunas($id){
+        $vacunas = DB::select('select v.name, vr.dosis, vr.date from vaccine_registers vr
+            join vaccines v on vr.vaccine_id = v.id where user_id = ?
+            order by 2', [$id]);
+
+        return view('reports.vaccine', ['vacunas'=> $vacunas, 'details' => false]);
+    }
+
+    public function allVacunas(){
+        $vacunas = DB::select('select u.identification, v.name as vname, vr.dosis, vr.date, u.name, u.phone FROM vaccine_registers vr
+        join vaccines v on vr.vaccine_id = v.id
+        join users u on u.id = vr.user_id
+        order by 1, 3');
+
+        return view('reports.vaccine', ['vacunas'=> $vacunas, 'details' => true]);
     }
 }
