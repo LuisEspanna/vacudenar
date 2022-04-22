@@ -33,6 +33,7 @@ Route::get('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunasInde
 Route::post('/vacunas', [App\Http\Controllers\HomeController::class, 'vacunasCreate'])->name('vacunas');
 
 Route::get('/citas', [App\Http\Controllers\HomeController::class, 'citasIndex'])->name('citas');
+Route::post('/citas', [App\Http\Controllers\HomeController::class, 'citasCreate'])->name('citas');
 
 Route::get('/vacunas/reporte', [App\Http\Controllers\HomeController::class, 'allVacunas']);
 Route::get('/vacunas/reporte/{id}', [App\Http\Controllers\HomeController::class, 'reporteVacunas'])->where('id','[0-9]+');

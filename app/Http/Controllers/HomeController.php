@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Gender;
+use App\Models\Status;
 use App\Models\User;
 use App\Models\Vaccine;
 use App\Models\VaccineRegister;
@@ -115,19 +116,19 @@ class HomeController extends Controller
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         $users = User::all();
-        $vaccines = Vaccine::all();
+        $statuses = Status::all();
 
         // Admin y salud
         if($user->role_id <= 2 ){
-            return view('citas', ['vaccines' => $vaccines, 'users' => $users, 'role' => $user->role_id]);
+            return view('citas', ['statuses' => $statuses, 'users' => $users, 'role' => $user->role_id]);
         } else {
-            return view('citas', ['vaccines' => $vaccines, 'user_id' => $user_id, 'role' => $user->role_id]);
+            return view('citas', ['statuses' => $statuses, 'user_id' => $user_id, 'role' => $user->role_id]);
         }
     }
 
     public function citasCreate(Request $request){
         $p = new Appointment();
-        $p->user_id = $request->input('vaccine_id');
+        $p->user_id = $request->input('user_id');
         $p->date = $request->input('date');
         $p->status_id = $request->input('status_id');
         $p->save();
