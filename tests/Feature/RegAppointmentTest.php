@@ -7,10 +7,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Models\Appointment;
 
-class RegVaccineTest extends TestCase
+class RegAppointmentTest extends TestCase
 {
     /** @test */
-    public function views_students_auth()
+    public function reg_appointment()
     {
         $userTodelete = DB::statement('delete from users where identification = 1085320421');
 
@@ -44,7 +44,7 @@ class RegVaccineTest extends TestCase
 
         sleep(3); 
 
-        $response = $this->get('api/v1/vaccines');
+        $response = $this->get('api/v1/appointments');
         $response->assertStatus(200);
         $response->assertSee('2022-04-30 13:46:00');
 
