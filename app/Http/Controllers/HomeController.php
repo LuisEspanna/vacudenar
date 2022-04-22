@@ -106,7 +106,7 @@ class HomeController extends Controller
         $p->vaccine_id = $request->input('vaccine_id');
         $p->date = $request->input('date');
         $p->dosis = $request->input('dosis');
-        $p->user_id = $request->input('user_id') ;
+        $p->user_id = $request->input('user_id');
         $p->save();
 
         notify()->success('Dósis registrada con éxito');
