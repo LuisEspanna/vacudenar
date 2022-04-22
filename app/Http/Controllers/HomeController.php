@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Gender;
 use App\Models\User;
 use App\Models\Vaccine;
@@ -124,7 +125,15 @@ class HomeController extends Controller
         }
     }
 
-    public function citasCreate(){
+    public function citasCreate(Request $request){
+        $p = new Appointment();
+        $p->user_id = $request->input('vaccine_id');
+        $p->date = $request->input('date');
+        $p->status_id = $request->input('status_id');
+        $p->save();
+
+        notify()->success('Cita registrada con éxito');
+        return redirect('/home' );
     }
 
     public function reporteVacunas($id){

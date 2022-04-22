@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Gender;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class APIController extends Controller
@@ -27,5 +27,10 @@ class APIController extends Controller
     public function getUsers(){
         $users = User::all();
         return response()->json($users);
+    }
+
+    public function getAppointments(){
+        $res = Appointment::all();
+        return response()->json($res);
     }
 }
