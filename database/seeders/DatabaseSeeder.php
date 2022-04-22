@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
             'phone' => '3183844053',
             'verified_email' => true,
         ]);
-            
 
         $this->command->info('Tabla users inicializada con datos!');
     }
@@ -50,6 +49,10 @@ class DatabaseSeeder extends Seeder
     public function seedStatus() {
         Status::create([
             'name' => 'activa'
+        ]);
+
+        Status::create([
+            'name' => 'atendida'
         ]);
 
         Status::create([

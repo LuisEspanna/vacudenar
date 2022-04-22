@@ -17,6 +17,7 @@ class VaccineRegister extends Migration
             $table->id('id');
             $table->foreignId('vaccine_id');
             $table->date('date');
+            $table->integer('dosis');
             $table->foreignId('user_id')->constrained();
         });
     }

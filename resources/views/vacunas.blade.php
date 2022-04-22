@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                     <label for="cod_grupo" class="form-label">Ingrese número de dosis</label>
-                    <select class="custom-select form-control-border border-width-2" name="number" required>
+                    <select class="custom-select form-control-border border-width-2" name="dosis" required>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>

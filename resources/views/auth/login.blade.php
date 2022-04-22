@@ -7,12 +7,12 @@
     <!-- Tabs Titles -->
     <h2 class="active"> 
         <a href="{{ route('login') }}">
-            <b>Sign In</b>
+            <b>INICIAR SESIÓN</b>
         </a>
     </h2>
     <h2 class="inactive underlineHover">
         <a href="{{ route('register') }}">
-            <b>Sign Up</b>
+            <b>REGISTRARSE</b>
         </a>
     </h2>
 

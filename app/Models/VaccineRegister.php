@@ -13,7 +13,8 @@ class VaccineRegister extends Model
     protected $fillable = [
         'vaccine_id',
         'date',
-        'user_id'
+        'user_id',
+        'dosis'
     ];
 
     // Relationships

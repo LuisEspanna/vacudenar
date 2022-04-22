@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gender;
 use App\Models\User;
 use App\Models\Vaccine;
 use App\Models\VaccineRegister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mckenziearts\Notify\LaravelNotify;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -30,19 +34,53 @@ class HomeController extends Controller
     {
         $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
-        $usuarios = count(User::all());
-        $dosis = count(VaccineRegister::all());
+        
+        
 
-        return view('home', [
-            'role' => $user->role_id,
-            'usuarios' => $usuarios,
-            'estudiantes' => 0,
-            'trabajadores' => 0,
-            'salud' => 0,
-            'citas_pendientes'=> 0,
-            'citas_atendidas'=> 0,
-            'dosis'=> $dosis
-        ]);
+        if($user->role_id <= 2){
+            $usuarios = count(User::all());
+            $dosis = count(VaccineRegister::all());
+            $salud = DB::table('users')->where('role_id', '=', 2)->get()->count();
+            $estudiantes = DB::table('users')->where('role_id', '=', 3)->get()->count();
+            $empleados = DB::table('users')->where('role_id', '=', 4)->get()->count();
+            $profesores = DB::table('users')->where('role_id', '=', 5)->get()->count();
+            $citas_pendientes = DB::table('appointments')->where('status_id', '=', 1)->get()->count();
+            $citas_atendidas = DB::table('appointments')->where('status_id', '=', 2)->get()->count();
+
+            $results = DB::select('select v.name, count(month(vc.date)) total, month(vc.date) as mes
+            from vacunas.vaccine_registers vc join vacunas.vaccines v 
+            on vc.vaccine_id = v.id
+            where year(vc.date) >= year(curdate())
+            group by v.name, vc.date');
+
+            return view('admin.admin', [
+                'role' => $user->role_id,
+                'usuarios' => $usuarios,
+                'estudiantes' =>$estudiantes,
+                'empleados' => $empleados,
+                'salud' => $salud,
+                'profesores' => $profesores,
+                'citas_pendientes'=> $citas_pendientes,
+                'citas_atendidas'=> $citas_atendidas,
+                'dosis'=> $dosis,
+                'results' => json_encode($results)
+            ]);
+        } else {
+            $dosis = DB::table('vaccine_registers')->where('user_id', '=', $user_id)->get()->count();
+            
+            $citas_pendientes = DB::select('select count(*) as total from vacunas.appointments
+            where user_id = ? and status_id = 1', [$user_id]);
+
+            $citas_atendidas = DB::select('select count(*) as total from vacunas.appointments
+            where user_id = ? and status_id = 2', [$user_id]);
+
+            return view('others.others', [
+                'role' => $user->role_id,
+                'citas_pendientes'=> $citas_pendientes[0],
+                'citas_atendidas'=> $citas_pendientes[0],
+                'dosis'=> $dosis
+            ]);
+        }
     }
 
     public function vacunasIndex()
@@ -53,7 +91,7 @@ class HomeController extends Controller
         $vaccines = Vaccine::all();
 
 
-        if($user->role_id != 2){
+        if($user->role_id < 2){
             return view('vacunas', ['vaccines' => $vaccines, 'users' => $users, 'role' => $user->role_id]);
         } else {
             return view('vacunas', ['vaccines' => $vaccines, 'user_id' => $user_id, 'role' => $user->role_id]);
@@ -65,6 +103,7 @@ class HomeController extends Controller
         $p = new VaccineRegister();
         $p->vaccine_id = $request->input('vaccine_id');
         $p->date = $request->input('date');
+        $p->dosis = $request->input('dosis');
         $p->user_id = $request->input('user_id') ;
         $p->save();
 

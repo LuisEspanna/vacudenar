@@ -133,7 +133,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=email], input[type=password], input[type=text] {
+input[type=email], input[type=password], input[type=text], input[type=number] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
