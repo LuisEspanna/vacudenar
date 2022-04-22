@@ -38,8 +38,8 @@ Route::post('/citas', [App\Http\Controllers\HomeController::class, 'citasCreate'
 Route::get('/vacunas/reporte', [App\Http\Controllers\HomeController::class, 'allVacunas']);
 Route::get('/vacunas/reporte/{id}', [App\Http\Controllers\HomeController::class, 'reporteVacunas'])->where('id','[0-9]+');
 
-Route::get('/citas/reporte', [App\Http\Controllers\HomeController::class, 'allVacunas']);
-Route::get('/citas/reporte/{id}', [App\Http\Controllers\HomeController::class, 'reporteVacunas'])->where('id','[0-9]+');
+Route::get('/citas/reporte', [App\Http\Controllers\HomeController::class, 'allCitas']);
+Route::get('/citas/reporte/{id}', [App\Http\Controllers\HomeController::class, 'reporteCitas'])->where('id','[0-9]+');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

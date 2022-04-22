@@ -77,7 +77,7 @@ class HomeController extends Controller
             return view('others.others', [
                 'role' => $user->role_id,
                 'citas_pendientes'=> $citas_pendientes[0],
-                'citas_atendidas'=> $citas_pendientes[0],
+                'citas_atendidas'=> $citas_atendidas[0],
                 'dosis'=> $dosis,
                 'id'=> $user_id
             ]);
@@ -120,9 +120,9 @@ class HomeController extends Controller
 
         // Admin y salud
         if($user->role_id <= 2 ){
-            return view('citas', ['statuses' => $statuses, 'users' => $users, 'role' => $user->role_id]);
+            return view('citas', ['statuses' => $statuses, 'users' => $users, 'role' => $user->role_id, 'id'=> $user_id]);
         } else {
-            return view('citas', ['statuses' => $statuses, 'user_id' => $user_id, 'role' => $user->role_id]);
+            return view('citas', ['statuses' => $statuses, 'user_id' => $user_id, 'role' => $user->role_id, 'id'=> $user_id]);
         }
     }
 
@@ -152,5 +152,28 @@ class HomeController extends Controller
         order by 1, 3');
 
         return view('reports.vaccine', ['vacunas'=> $vacunas, 'details' => true]);
+    }
+
+    public function reporteCitas($id){
+        $citas = DB::select('select
+        u.name, app.date, u.identification, u.email, s.name as status
+        from appointments app 
+        join users u on app.user_id = u.id 
+        join statuses s on app.status_id = s.id 
+        where u.id = ?
+        order by 3, 2', [$id]);
+
+        return view('reports.appointments', ['citas'=> $citas, 'details' => false]);
+    }
+
+    public function allCitas(){
+        $citas = DB::select('select
+        u.name, app.date, u.identification, u.email, s.name as status
+        from appointments app 
+        join users u on app.user_id = u.id 
+        join statuses s on app.status_id = s.id
+        order by 3, 2');
+
+        return view('reports.appointments', ['citas'=> $citas, 'details' => true]);
     }
 }
