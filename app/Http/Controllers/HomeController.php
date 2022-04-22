@@ -47,11 +47,12 @@ class HomeController extends Controller
             $citas_pendientes = DB::table('appointments')->where('status_id', '=', 1)->get()->count();
             $citas_atendidas = DB::table('appointments')->where('status_id', '=', 2)->get()->count();
 
-            $results = DB::select('select v.name, count(month(vc.date)) total, month(vc.date) as mes
+            $results = DB::select('select v.name, count(v.name) total, month(vc.date) as mes
             from vaccine_registers vc join vaccines v 
             on vc.vaccine_id = v.id
             where year(vc.date) >= year(curdate())
-            group by v.name, vc.date');
+            group by v.name, month(vc.date)
+            order by 1');
 
             return view('admin.admin', [
                 'role' => $user->role_id,

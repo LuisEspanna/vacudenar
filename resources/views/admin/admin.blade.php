@@ -120,33 +120,42 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
 
+            const nomVacunas = {};
+
             const results = eval(document.getElementById("data").value);
             console.log(results);
 
             const colores = [
-                'rgb(123, 250, 244)',
-                'rgb(180, 100, 245)',
-                'rgb(180, 100, 200)',
-                'rgb(180, 100, 200)',
-                'rgb(210, 100, 200)',
-                'rgb(240, 100, 200)',
-                'rgb(240, 100, 200)',
+                'rgb(52, 241, 255)',
+                'rgb(250, 123, 123)',
+                'rgb(240, 102, 114)',
+                'rgb(99, 52, 255)',
+                'rgb(52, 241, 255)',
+                'rgb(250, 123, 123)',
+                'rgb(240, 102, 114)',
+                'rgb(99, 52, 255)',
             ];
+             let a = [];
+             
+
+            results.forEach((e, i) => {
+                nomVacunas[e.name] = {
+                    label : e.name,
+                    backgroundColor : colores[i],
+                    borderColor : colores[i],
+                    data : [0,0,0,0,0,0,0,0,0,0,0,0],
+                };
+            });
+
+            console.log(nomVacunas);
 
             let vacunas = results.map((e, i) => {
-                let obj = {};
-                obj.label = e.name;
-                obj.backgroundColor = colores[i];
-                obj.borderColor = colores[i];
-                obj.data = [];
-
-                for (let index = 1; index < 12; index++) {
-                    if(e.mes === index){
-                        obj.data.push(e.total);
-                    } else obj.data.push(0);
-                }
-
-                return obj;
+                nomVacunas[e.name].data = [
+                    ...nomVacunas[e.name].data.slice(0, e.mes-1),
+                    e.total,
+                    ...nomVacunas[e.name].data.slice(e.mes)
+                ];
+                return nomVacunas[e.name];
             });
 
             const labels = [
