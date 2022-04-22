@@ -29,6 +29,25 @@ class APIController extends Controller
         return response()->json($users);
     }
 
+    public function getUser($id){
+        $user = DB::select('select * from users where identification = ?', [$id]);
+        return response()->json($user);
+    }
+
+    public function createUsers($data){
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role_id' => $data['role_id'],
+            'identification' => $data['identification'],
+            'gender_id' => $data['gender_id'],   
+            'address' => $data['address'],
+            'phone' => $data['phone'],
+            'verified_email' => true,
+        ]);
+    }
+
     public function getAppointments(){
         $res = Appointment::all();
         return response()->json($res);

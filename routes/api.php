@@ -25,4 +25,8 @@ Route::get('v1/vaccines',            [APIController::class, 'getReportVaccines']
 
 Route::get('v1/users',            [APIController::class, 'getUsers']);
 
+Route::get('v1/users/{id}',            [APIController::class, 'getUser'])->where('id','[0-9]+');
+
 Route::get('v1/appointments',            [APIController::class, 'getAppointments']);
+
+Route::post('v1/users',            [APIController::class, 'createUsers']);

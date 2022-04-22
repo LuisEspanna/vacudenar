@@ -16,7 +16,7 @@ class VaccineRegister extends Migration
         Schema::create('vaccine_registers', function (Blueprint $table) {
             $table->id('id');
             $table->foreignId('vaccine_id');
-            $table->date('date');
+            $table->timestamp('date');
             $table->integer('dosis');
             $table->foreignId('user_id')->constrained();
         });
